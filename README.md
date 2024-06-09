@@ -7,6 +7,7 @@ Transmission-RPC-API
 [Official Transmission RPC specs](https://github.com/transmission/transmission/blob/master/extras/rpc-spec.txt) 
 
 C# implementation of the Transmission RPC API.
+Up to date with Transmission RPC specification as of Transmission 4.1.0 (rpc-version-semver 5.4.0, rpc-version: 18)
 
 | Command              | Not Implemented | Implemented|
 | -------------------- |:-:|:-:|
@@ -32,6 +33,9 @@ C# implementation of the Transmission RPC API.
 | queue-move-down      |   | x |
 | queue-move-bottom    |   | x |
 | free-space           |   | x |
+| group-set            |   | x |
+| group-get            |   | x |
+
 
 How to use
 -------------
