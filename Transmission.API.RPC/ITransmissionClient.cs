@@ -80,6 +80,13 @@ namespace Transmission.API.RPC
         NewTorrentInfo TorrentAdd(NewTorrent torrent);
 
         /// <summary>
+        /// Get fields of recently active torrents (API: torrent-get)
+        /// </summary>
+        /// <param name="fields">Fields of torrents</param>
+        /// <returns>Torrents info</returns>
+        TransmissionTorrents TorrentGetRecentlyActive(string[] fields);
+
+        /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
@@ -143,7 +150,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start recently active torrents (API: torrent-start)
         /// </summary>
-        void TorrentStart();
+        void TorrentStartRecentlyActive();
 
         /// <summary>
         /// Start torrents (API: torrent-start)
@@ -154,7 +161,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start now recently active torrents (API: torrent-start-now)
         /// </summary>
-        void TorrentStartNow();
+        void TorrentStartNowRecentlyActive();
 
         /// <summary>
         /// Start now torrents (API: torrent-start-now)
@@ -165,7 +172,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Stop recently active torrents (API: torrent-stop)
         /// </summary>
-        void TorrentStop();
+        void TorrentStopRecentlyActive();
 
         /// <summary>
         /// Stop torrents (API: torrent-stop)
@@ -176,7 +183,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Verify recently active torrents (API: torrent-verify)
         /// </summary>
-        void TorrentVerify();
+        void TorrentVerifyRecentlyActive();
 
         /// <summary>
         /// Verify torrents (API: torrent-verify)
@@ -187,7 +194,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Reannounce recently active torrents (API: torrent-reannounce)
         /// </summary>
-        void TorrentReannounce();
+        void TorrentReannounceRecentlyActive();
 
         /// <summary>
         /// Reannounce torrents (API: torrent-reannounce)

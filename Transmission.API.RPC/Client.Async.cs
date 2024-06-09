@@ -127,6 +127,25 @@ namespace Transmission.API.RPC
         }
 
         /// <summary>
+        /// Get fields of recently active torrents (API: torrent-get)
+        /// </summary>
+        /// <param name="fields">Fields of torrents</param>
+        /// <returns>Torrents info</returns>
+        public async Task<TransmissionTorrents> TorrentGetRecentlyActiveAsync(string[] fields)
+        {
+            var arguments = new Dictionary<string, object>();
+            arguments.Add("fields", fields);
+            arguments.Add("ids", "recently-active");
+
+            var request = new TransmissionRequest("torrent-get", arguments);
+
+            var response = await SendRequestAsync(request);
+            var result = response.Deserialize<TransmissionTorrents>();
+
+            return result;
+        }
+
+        /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
@@ -143,7 +162,7 @@ namespace Transmission.API.RPC
             var request = new TransmissionRequest("torrent-get", arguments);
 
             var response = await SendRequestAsync(request);
-            var json = response.ToJson
+            var result = response.Deserialize<TransmissionTorrents>();
 
             return result;
         }
@@ -179,7 +198,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start recently active torrents (API: torrent-start)
         /// </summary>
-        public async Task TorrentStartAsync()
+        public async Task TorrentStartRecentlyActiveAsync()
         {
             var request = new TransmissionRequest("torrent-start", new Dictionary<string, object> { { "ids", "recently-active" } });
             var response = await SendRequestAsync(request);
@@ -202,7 +221,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start now recently active torrents (API: torrent-start-now)
         /// </summary>
-        public async Task TorrentStartNowAsync()
+        public async Task TorrentStartNowRecentlyActiveAsync()
         {
             var request = new TransmissionRequest("torrent-start-now", new Dictionary<string, object> { { "ids", "recently-active" } });
             var response = await SendRequestAsync(request);
@@ -225,7 +244,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Stop recently active torrents (API: torrent-stop)
         /// </summary>
-        public async Task TorrentStopAsync()
+        public async Task TorrentStopRecentlyActiveAsync()
         {
             var request = new TransmissionRequest("torrent-stop", new Dictionary<string, object> { { "ids", "recently-active" } });
             var response = await SendRequestAsync(request);
@@ -248,7 +267,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Verify recently active torrents (API: torrent-verify)
         /// </summary>
-        public async Task TorrentVerifyAsync()
+        public async Task TorrentVerifyRecentlyActiveAsync()
         {
             var request = new TransmissionRequest("torrent-verify", new Dictionary<string, object> { { "ids", "recently-active" } });
             var response = await SendRequestAsync(request);
@@ -271,7 +290,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Reannounce recently active torrents (API: torrent-reannounce)
         /// </summary>
-        public async Task TorrentReannounceAsync()
+        public async Task TorrentReannounceRecentlyActiveAsync()
         {
             var request = new TransmissionRequest("torrent-reannounce", new Dictionary<string, object> { { "ids", "recently-active" } });
             var response = await SendRequestAsync(request);

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Transmission.API.RPC.Entity
 {
+    /// <summary>
+    /// Contains settings for a bandwidth group
+    /// </summary>
     public class BandwidthGroup
     {
         /// <summary>

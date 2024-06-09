@@ -5,6 +5,9 @@ using Transmission.API.RPC.Common;
 
 namespace Transmission.API.RPC.Arguments
 {
+    /// <summary>
+    /// Bandwidth group settings for editing bandwidth groups
+    /// </summary>
     public class BandwidthGroupSettings : ArgumentsBase
     {
         /// <summary>

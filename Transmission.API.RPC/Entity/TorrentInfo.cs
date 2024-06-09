@@ -908,6 +908,6 @@ namespace Transmission.API.RPC.Entity
         /// Array of torrent-id numbers of recently-removed torrents
         /// </summary>
         [JsonProperty("removed")]
-        public TorrentInfo[] Removed{ get; set; }
+        public long?[] Removed{ get; set; }
     }
 }

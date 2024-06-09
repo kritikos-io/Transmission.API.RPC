@@ -147,6 +147,18 @@ namespace Transmission.API.RPC
         }
 
         /// <summary>
+        /// Get fields of recently active torrents (API: torrent-get)
+        /// </summary>
+        /// <param name="fields">Fields of torrents</param>
+        /// <returns>Torrents info</returns>
+        public TransmissionTorrents TorrentGetRecentlyActive(string[] fields)
+        {
+            var task = TorrentGetRecentlyActiveAsync(fields);
+            task.WaitAndUnwrapException();
+            return task.Result;
+        }
+
+        /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
@@ -182,9 +194,9 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start recently active torrents (API: torrent-start)
         /// </summary>
-        public void TorrentStart()
+        public void TorrentStartRecentlyActive()
         {
-            TorrentStartAsync().WaitAndUnwrapException();
+            TorrentStartRecentlyActiveAsync().WaitAndUnwrapException();
         }
         #endregion
 
@@ -202,9 +214,9 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start now recently active torrents (API: torrent-start-now)
         /// </summary>
-        public void TorrentStartNow()
+        public void TorrentStartNowRecentlyActive()
         {
-            TorrentStartNowAsync().WaitAndUnwrapException();
+            TorrentStartNowRecentlyActiveAsync().WaitAndUnwrapException();
         }
         #endregion
 
@@ -221,9 +233,9 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Stop recently active torrents (API: torrent-stop)
         /// </summary>
-        public void TorrentStop()
+        public void TorrentStopRecentlyActive()
         {
-            TorrentStopAsync().WaitAndUnwrapException();
+            TorrentStopRecentlyActiveAsync().WaitAndUnwrapException();
         }
         #endregion
 
@@ -241,9 +253,9 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Verify recently active torrents (API: torrent-verify)
         /// </summary>
-        public void TorrentVerify()
+        public void TorrentVerifyRecentlyActive()
         {
-            TorrentVerifyAsync().WaitAndUnwrapException();
+            TorrentVerifyRecentlyActiveAsync().WaitAndUnwrapException();
         }
 
         #endregion
@@ -262,9 +274,9 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Reannounce recently active torrents (API: torrent-reannounce)
         /// </summary>
-        public void TorrentReannounce()
+        public void TorrentReannounceRecentlyActive()
         {
-            TorrentReannounceAsync().WaitAndUnwrapException();
+            TorrentReannounceRecentlyActiveAsync().WaitAndUnwrapException();
         }
 
         #endregion

@@ -31,7 +31,6 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Get information of current session (API: session-get)
         /// </summary>
-		/// <param name="fields">Fields of session information</param>
         /// <returns>Session information</returns>
         Task<SessionInfo> GetSessionInformationAsync();
 
@@ -65,6 +64,13 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <returns>Torrent info (ID, Name and HashString)</returns>
         Task<NewTorrentInfo> TorrentAddAsync(NewTorrent torrent);
+
+        /// <summary>
+        /// Get fields of recently active torrents (API: torrent-get)
+        /// </summary>
+        /// <param name="fields">Fields of torrents</param>
+        /// <returns>Torrents info</returns>
+        Task<TransmissionTorrents> TorrentGetRecentlyActiveAsync(string[] fields);
 
         /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
@@ -130,7 +136,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start recently active torrents (API: torrent-start)
         /// </summary>
-        Task TorrentStartAsync();
+        Task TorrentStartRecentlyActiveAsync();
 
         /// <summary>
         /// Start torrents (API: torrent-start)
@@ -141,7 +147,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Start now recently active torrents (API: torrent-start-now)
         /// </summary>
-        Task TorrentStartNowAsync();
+        Task TorrentStartNowRecentlyActiveAsync();
 
         /// <summary>
         /// Start now torrents (API: torrent-start-now)
@@ -152,7 +158,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Stop recently active torrents (API: torrent-stop)
         /// </summary>
-        Task TorrentStopAsync();
+        Task TorrentStopRecentlyActiveAsync();
 
         /// <summary>
         /// Stop torrents (API: torrent-stop)
@@ -163,7 +169,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Verify recently active torrents (API: torrent-verify)
         /// </summary>
-        Task TorrentVerifyAsync();
+        Task TorrentVerifyRecentlyActiveAsync();
 
         /// <summary>
         /// Verify torrents (API: torrent-verify)
@@ -174,7 +180,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Reannounce recently active torrents (API: torrent-reannounce)
         /// </summary>
-        Task TorrentReannounceAsync();
+        Task TorrentReannounceRecentlyActiveAsync();
 
         /// <summary>
         /// Reannounce torrents (API: torrent-reannounce)
