@@ -18,7 +18,7 @@ namespace Transmission.API.RPC.Entity
         /// Max global download speed (KBps)
         /// </summary>
         [JsonProperty("alt-speed-down")]
-        public int? AlternativeSpeedDown { get; set; }
+        public long? AlternativeSpeedDown { get; set; }
 
         /// <summary>
         /// True means use the alt speeds
@@ -30,7 +30,7 @@ namespace Transmission.API.RPC.Entity
         /// When to turn on alt speeds (units: minutes after midnight)
         /// </summary>
         [JsonProperty("alt-speed-time-begin")]
-        public int? AlternativeSpeedTimeBegin { get; set; }
+        public long? AlternativeSpeedTimeBegin { get; set; }
 
         /// <summary>
         /// True means the scheduled on/off times are used
@@ -42,25 +42,25 @@ namespace Transmission.API.RPC.Entity
         /// When to turn off alt speeds
         /// </summary>
         [JsonProperty("alt-speed-time-end")]
-        public int? AlternativeSpeedTimeEnd { get; set; }
+        public long? AlternativeSpeedTimeEnd { get; set; }
 
         /// <summary>
         /// What day(s) to turn on alt speeds
         /// </summary>
         [JsonProperty("alt-speed-time-day")]
-        public int? AlternativeSpeedTimeDay { get; set; }
+        public long? AlternativeSpeedTimeDay { get; set; }
 
         /// <summary>
         /// Max global upload speed (KBps)
         /// </summary>
         [JsonProperty("alt-speed-up")]
-        public int? AlternativeSpeedUp { get; set; }
+        public long? AlternativeSpeedUp { get; set; }
 
         /// <summary>
         /// Location of the blocklist to use for "blocklist-update"
         /// </summary>
         [JsonProperty("blocklist-url")]
-        public string BlocklistURL { get; set; }
+        public string BlocklistUrl { get; set; }
 
         /// <summary>
         /// True means enabled
@@ -69,10 +69,28 @@ namespace Transmission.API.RPC.Entity
         public bool? BlocklistEnabled { get; set; }
 
         /// <summary>
+        /// Number of rules in the blocklist
+        /// </summary>
+        [JsonProperty("blocklist-size")]
+        public long? BlocklistSize { get; set; }
+
+        /// <summary>
         /// Maximum size of the disk cache (MB)
         /// </summary>
         [JsonProperty("cache-size-mb")]
-        public int? CacheSizeMB { get; set; }
+        public long? CacheSizeMb { get; set; }
+
+        /// <summary>
+        /// Default announce URLs, one per line, and a blank line between tiers
+        /// </summary>
+        [JsonProperty("default-trackers")]
+        public string DefaultTrackers { get; set; }
+
+        /// <summary>
+        /// Allow DHT in public torrents
+        /// </summary>
+        [JsonProperty("dht-enabled")]
+        public bool? DhtEnabled { get; set; }
 
         /// <summary>
         /// Default path to download torrents
@@ -91,19 +109,13 @@ namespace Transmission.API.RPC.Entity
         /// Max number of torrents to download at once (see download-queue-enabled)
         /// </summary>
         [JsonProperty("download-queue-size")]
-        public int? DownloadQueueSize { get; set; }
+        public long? DownloadQueueSize { get; set; }
 
         /// <summary>
         /// If true, limit how many torrents can be downloaded at once
         /// </summary>
         [JsonProperty("download-queue-enabled")]
         public bool? DownloadQueueEnabled { get; set; }
-
-        /// <summary>
-        /// True means allow dht in public torrents
-        /// </summary>
-        [JsonProperty("dht-enabled")]
-        public bool? DHTEnabled { get; set; }
 
         /// <summary>
         /// "required", "preferred", "tolerated"
@@ -115,7 +127,7 @@ namespace Transmission.API.RPC.Entity
         /// Torrents we're seeding will be stopped if they're idle for this long
         /// </summary>
         [JsonProperty("idle-seeding-limit")]
-        public int? IdleSeedingLimit { get; set; }
+        public long? IdleSeedingLimit { get; set; }
 
         /// <summary>
         /// True if the seeding inactivity limit is honored by default
@@ -139,19 +151,19 @@ namespace Transmission.API.RPC.Entity
         /// True means allow Local Peer Discovery in public torrents
         /// </summary>
         [JsonProperty("lpd-enabled")]
-        public bool? LPDEnabled { get; set; }
+        public bool? LpdEnabled { get; set; }
 
         /// <summary>
         /// Maximum global number of peers
         /// </summary>
         [JsonProperty("peer-limit-global")]
-        public int? PeerLimitGlobal { get; set; }
+        public long? PeerLimitGlobal { get; set; }
 
         /// <summary>
         /// Maximum global number of peers
         /// </summary>
         [JsonProperty("peer-limit-per-torrent")]
-        public int? PeerLimitPerTorrent { get; set; }
+        public long? PeerLimitPerTorrent { get; set; }
 
         /// <summary>
         /// True means allow pex in public torrents
@@ -163,7 +175,7 @@ namespace Transmission.API.RPC.Entity
         /// Port number
         /// </summary>
         [JsonProperty("peer-port")]
-        public int? PeerPort { get; set; }
+        public long? PeerPort { get; set; }
 
         /// <summary>
         /// True means pick a random peer port on launch
@@ -187,19 +199,31 @@ namespace Transmission.API.RPC.Entity
         /// Torrents that are idle for N minuets aren't counted toward seed-queue-size or download-queue-size
         /// </summary>
         [JsonProperty("queue-stalled-minutes")]
-        public int? QueueStalledMinutes { get; set; }
+        public long? QueueStalledMinutes { get; set; }
 
         /// <summary>
         /// True means append ".part" to incomplete files
         /// </summary>
         [JsonProperty("rename-partial-files")]
         public bool? RenamePartialFiles { get; set; }
-
+        
         /// <summary>
         /// Session ID
         /// </summary>
         [JsonProperty("session-id")]
-        public string SessionID { get; set; }
+        public string SessionId { get; set; }
+
+        /// <summary>
+        /// Filename of the script to run
+        /// </summary>
+        [JsonProperty("script-torrent-added-filename")]
+        public string ScriptTorrentAddedFilename { get; set; }
+
+        /// <summary>
+        /// Whether or not to call the "added" script
+        /// </summary>
+        [JsonProperty("script-torrent-added-enabled")]
+        public bool? ScriptTorrentAddedEnabled { get; set; }
 
         /// <summary>
         /// Filename of the script to run
@@ -212,6 +236,18 @@ namespace Transmission.API.RPC.Entity
         /// </summary>
         [JsonProperty("script-torrent-done-enabled")]
         public bool? ScriptTorrentDoneEnabled { get; set; }
+
+        /// <summary>
+        /// Filename of the script to run
+        /// </summary>
+        [JsonProperty("script-torrent-done-seeding-filename")]
+        public string ScriptTorrentDoneSeedingFilename { get; set; }
+
+        /// <summary>
+        /// Whether or not to call the "done seeding" script
+        /// </summary>
+        [JsonProperty("script-torrent-done-seeding-enabled")]
+        public bool? ScriptTorrentDoneSeedingEnabled { get; set; }
 
         /// <summary>
         /// The default seed ratio for torrents to use
@@ -229,7 +265,7 @@ namespace Transmission.API.RPC.Entity
         /// Max number of torrents to uploaded at once (see seed-queue-enabled)
         /// </summary>
         [JsonProperty("seed-queue-size")]
-        public int? SeedQueueSize { get; set; }
+        public long? SeedQueueSize { get; set; }
 
         /// <summary>
         /// If true, limit how many torrents can be uploaded at once
@@ -241,7 +277,7 @@ namespace Transmission.API.RPC.Entity
         /// Max global download speed (KBps)
         /// </summary>
         [JsonProperty("speed-limit-down")]
-        public int? SpeedLimitDown { get; set; }
+        public long? SpeedLimitDown { get; set; }
 
         /// <summary>
         /// True means enabled
@@ -253,7 +289,7 @@ namespace Transmission.API.RPC.Entity
         ///  max global upload speed (KBps)
         /// </summary>
         [JsonProperty("speed-limit-up")]
-        public int? SpeedLimitUp { get; set; }
+        public long? SpeedLimitUp { get; set; }
 
         /// <summary>
         /// True means enabled
@@ -286,12 +322,6 @@ namespace Transmission.API.RPC.Entity
         public bool? UtpEnabled { get; set; }
 
         /// <summary>
-        /// Number of rules in the blocklist
-        /// </summary>
-        [JsonProperty("blocklist-size")]
-        public int BlocklistSize{ get; set; }
-
-        /// <summary>
         /// Location of transmission's configuration directory
         /// </summary>
         [JsonProperty("config-dir")]
@@ -301,16 +331,22 @@ namespace Transmission.API.RPC.Entity
         /// The current RPC API version
         /// </summary>
         [JsonProperty("rpc-version")]
-        public int RpcVersion{ get; set; }
+        public long? RpcVersion{ get; set; }
 
         /// <summary>
         /// The minimum RPC API version supported
         /// </summary>
         [JsonProperty("rpc-version-minimum")]
-        public int RpcVersionMinimum{ get; set; }
+        public long? RpcVersionMinimum { get; set; }
 
         /// <summary>
-        /// Long version string "$version ($revision)"
+        /// Current RPC API version in a semver-compatible string
+        /// </summary>
+        [JsonProperty("rpc-version-semver")]
+        public string RpcVersionSemver { get; set; }
+
+        /// <summary>
+        /// long? version string "$version ($revision)"
         /// </summary>
         [JsonProperty("version")]
         public string Version{ get; set; }

@@ -17,7 +17,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Max global download speed (KBps)
         /// </summary>
-        public int? AlternativeSpeedDown { get { return GetValue<int?>("alt-speed-down"); } set { this["alt-speed-down"] = value; } }
+        public long? AlternativeSpeedDown { get { return GetValue<long?>("alt-speed-down"); } set { this["alt-speed-down"] = value; } }
 
         /// <summary>
         /// True means use the alt speeds
@@ -27,7 +27,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// When to turn on alt speeds (units: minutes after midnight)
         /// </summary>
-        public int? AlternativeSpeedTimeBegin { get { return GetValue<int?>("alt-speed-time-begin"); } set { this["alt-speed-time-begin"] = value; } }
+        public long? AlternativeSpeedTimeBegin { get { return GetValue<long?>("alt-speed-time-begin"); } set { this["alt-speed-time-begin"] = value; } }
 
         /// <summary>
         /// True means the scheduled on/off times are used
@@ -37,22 +37,22 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// When to turn off alt speeds
         /// </summary>
-        public int? AlternativeSpeedTimeEnd { get { return GetValue<int?>("alt-speed-time-end"); } set { this["alt-speed-time-end"] = value; } }
+        public long? AlternativeSpeedTimeEnd { get { return GetValue<long?>("alt-speed-time-end"); } set { this["alt-speed-time-end"] = value; } }
 
         /// <summary>
         /// What day(s) to turn on alt speeds
         /// </summary>
-        public int? AlternativeSpeedTimeDay { get { return GetValue<int?>("alt-speed-time-day"); } set { this["alt-speed-time-day"] = value; } }
+        public long? AlternativeSpeedTimeDay { get { return GetValue<long?>("alt-speed-time-day"); } set { this["alt-speed-time-day"] = value; } }
 
         /// <summary>
         /// Max global upload speed (KBps)
         /// </summary>
-        public int? AlternativeSpeedUp { get { return GetValue<int?>("alt-speed-up"); } set { this["alt-speed-up"] = value; } }
+        public long? AlternativeSpeedUp { get { return GetValue<long?>("alt-speed-up"); } set { this["alt-speed-up"] = value; } }
 
         /// <summary>
         /// Location of the blocklist to use for "blocklist-update"
         /// </summary>
-        public string BlocklistURL { get { return GetValue<string>("blocklist-url"); } set { this["blocklist-url"] = value; } }
+        public string BlocklistUrl { get { return GetValue<string>("blocklist-url"); } set { this["blocklist-url"] = value; } }
 
         /// <summary>
         /// True means enabled
@@ -62,17 +62,22 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Maximum size of the disk cache (MB)
         /// </summary>
-        public int? CacheSizeMB { get { return GetValue<int?>("cache-size-mb"); } set { this["cache-size-mb"] = value; } }
+        public long? CacheSizeMb { get { return GetValue<long?>("cache-size-mb"); } set { this["cache-size-mb"] = value; } }
 
         /// <summary>
-        /// Default path to download torrents
+        /// Announce URLs, one per line, and a blank line between tiers
+        /// </summary>
+        public string DefaultTrackers { get { return GetValue<string>("default-trackers"); } set { this["default-trackers"] = value; } }
+
+        /// <summary>
+        /// Default path to download torrents to
         /// </summary>
         public string DownloadDirectory { get { return GetValue<string>("download-dir"); } set { this["download-dir"] = value; } }
 
         /// <summary>
         /// Max number of torrents to download at once (see download-queue-enabled)
         /// </summary>
-        public int? DownloadQueueSize { get { return GetValue<int?>("download-queue-size"); } set { this["download-queue-size"] = value; } }
+        public long? DownloadQueueSize { get { return GetValue<long?>("download-queue-size"); } set { this["download-queue-size"] = value; } }
 
         /// <summary>
         /// If true, limit how many torrents can be downloaded at once
@@ -82,7 +87,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// True means allow dht in public torrents
         /// </summary>
-        public bool? DHTEnabled { get { return GetValue<bool?>("dht-enabled"); } set { this["dht-enabled"] = value; } }
+        public bool? DhtEnabled { get { return GetValue<bool?>("dht-enabled"); } set { this["dht-enabled"] = value; } }
 
         /// <summary>
         /// "required", "preferred", "tolerated"
@@ -90,9 +95,9 @@ namespace Transmission.API.RPC.Arguments
         public string Encryption { get { return GetValue<string>("encryption"); } set { this["encryption"] = value; } }
 
         /// <summary>
-        /// Torrents we're seeding will be stopped if they're idle for this long
+        /// Torrents we're seeding will be stopped if they're idle for this long?
         /// </summary>
-        public int? IdleSeedingLimit { get { return GetValue<int?>("idle-seeding-limit"); } set { this["idle-seeding-limit"] = value; } }
+        public long? IdleSeedingLimit { get { return GetValue<long?>("idle-seeding-limit"); } set { this["idle-seeding-limit"] = value; } }
 
         /// <summary>
         /// True if the seeding inactivity limit is honored by default
@@ -112,17 +117,17 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// True means allow Local Peer Discovery in public torrents
         /// </summary>
-        public bool? LPDEnabled { get { return GetValue<bool?>("lpd-enabled"); } set { this["lpd-enabled"] = value; } }
+        public bool? LpdEnabled { get { return GetValue<bool?>("lpd-enabled"); } set { this["lpd-enabled"] = value; } }
 
         /// <summary>
         /// Maximum global number of peers
         /// </summary>
-        public int? PeerLimitGlobal { get { return GetValue<int?>("peer-limit-global"); } set { this["peer-limit-global"] = value; } }
+        public long? PeerLimitGlobal { get { return GetValue<long?>("peer-limit-global"); } set { this["peer-limit-global"] = value; } }
 
         /// <summary>
         /// Maximum global number of peers
         /// </summary>
-        public int? PeerLimitPerTorrent { get { return GetValue<int?>("peer-limit-per-torrent"); } set { this["peer-limit-per-torrent"] = value; } }
+        public long? PeerLimitPerTorrent { get { return GetValue<long?>("peer-limit-per-torrent"); } set { this["peer-limit-per-torrent"] = value; } }
 
         /// <summary>
         /// True means allow pex in public torrents
@@ -132,7 +137,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Port number
         /// </summary>
-        public int? PeerPort { get { return GetValue<int?>("peer-port"); } set { this["peer-port"] = value; } }
+        public long? PeerPort { get { return GetValue<long?>("peer-port"); } set { this["peer-port"] = value; } }
 
         /// <summary>
         /// True means pick a random peer port on launch
@@ -152,12 +157,22 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Torrents that are idle for N minuets aren't counted toward seed-queue-size or download-queue-size
         /// </summary>
-        public int? QueueStalledMinutes { get { return GetValue<int?>("queue-stalled-minutes"); } set { this["queue-stalled-minutes"] = value; } }
+        public long? QueueStalledMinutes { get { return GetValue<long?>("queue-stalled-minutes"); } set { this["queue-stalled-minutes"] = value; } }
 
         /// <summary>
         /// True means append ".part" to incomplete files
         /// </summary>
         public bool? RenamePartialFiles { get { return GetValue<bool?>("rename-partial-files"); } set { this["rename-partial-files"] = value; } }
+
+        /// <summary>
+        /// Filename of the script to run
+        /// </summary>
+        public string ScriptTorrentAddedFilename { get { return GetValue<string>("script-torrent-added-filename"); } set { this["script-torrent-added-filename"] = value; } }
+
+        /// <summary>
+        /// Whether or not to call the "added" script
+        /// </summary>
+        public bool? ScriptTorrentAddedEnabled { get { return GetValue<bool?>("script-torrent-added-enabled"); } set { this["script-torrent-added-enabled"] = value; } }
 
         /// <summary>
         /// Filename of the script to run
@@ -170,9 +185,19 @@ namespace Transmission.API.RPC.Arguments
         public bool? ScriptTorrentDoneEnabled { get { return GetValue<bool?>("script-torrent-done-enabled"); } set { this["script-torrent-done-enabled"] = value; } }
 
         /// <summary>
+        /// Filename of the script to run
+        /// </summary>
+        public string ScriptTorrentDoneSeedingFilename { get { return GetValue<string>("script-torrent-done-seeding-filename"); } set { this["script-torrent-done-seeding-filename"] = value; } }
+
+        /// <summary>
+        /// Whether or not to call the "done seeding" script
+        /// </summary>
+        public bool? ScriptTorrentDoneSeedingEnabled { get { return GetValue<bool?>("script-torrent-done-seeding-enabled"); } set { this["script-torrent-done-seeding-enabled"] = value; } }
+
+        /// <summary>
         /// The default seed ratio for torrents to use
         /// </summary>
-        public double? SeedRatioLimit { get { return GetValue<int?>("seedRatioLimit"); } set { this["seedRatioLimit"] = value; } }
+        public double? SeedRatioLimit { get { return GetValue<long?>("seedRatioLimit"); } set { this["seedRatioLimit"] = value; } }
 
         /// <summary>
         /// True if seedRatioLimit is honored by default
@@ -182,7 +207,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Max number of torrents to uploaded at once (see seed-queue-enabled)
         /// </summary>
-        public int? SeedQueueSize { get { return GetValue<int?>("seed-queue-size"); } set { this["seed-queue-size"] = value; } }
+        public long? SeedQueueSize { get { return GetValue<long?>("seed-queue-size"); } set { this["seed-queue-size"] = value; } }
 
         /// <summary>
         /// If true, limit how many torrents can be uploaded at once
@@ -192,7 +217,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Max global download speed (KBps)
         /// </summary>
-        public int? SpeedLimitDown { get { return GetValue<int?>("speed-limit-down"); } set { this["speed-limit-down"] = value; } }
+        public long? SpeedLimitDown { get { return GetValue<long?>("speed-limit-down"); } set { this["speed-limit-down"] = value; } }
 
         /// <summary>
         /// True means enabled
@@ -202,7 +227,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         ///  max global upload speed (KBps)
         /// </summary>
-        public int? SpeedLimitUp { get { return GetValue<int?>("speed-limit-up"); } set { this["speed-limit-up"] = value; } }
+        public long? SpeedLimitUp { get { return GetValue<long?>("speed-limit-up"); } set { this["speed-limit-up"] = value; } }
 
         /// <summary>
         /// True means enabled
@@ -220,14 +245,9 @@ namespace Transmission.API.RPC.Arguments
         public bool? TrashOriginalTorrentFiles { get { return GetValue<bool?>("trash-original-torrent-files"); } set { this["trash-original-torrent-files"] = value; } }
 
         /// <summary>
-        /// Units
-        /// </summary>
-        public Units Units { get { return GetValue<Units>("units"); } set { this["units"] = value; } }
-
-        /// <summary>
         /// True means allow utp
         /// </summary>
-        public bool? UtpEnabled { get { return GetValue<bool?> ("utp-enabled"); } set { this["utp-enabled"] = value; } }
+        public bool? UtpEnabled { get { return GetValue<bool?>("utp-enabled"); } set { this["utp-enabled"] = value; } }
 
     }
 }

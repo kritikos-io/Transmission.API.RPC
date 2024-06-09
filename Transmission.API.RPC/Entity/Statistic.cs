@@ -16,31 +16,31 @@ namespace Transmission.API.RPC.Entity
         /// Active torrent count
         /// </summary>
         [JsonProperty("activeTorrentCount")]
-        public int ActiveTorrentCount { get; set; }
+        public long? ActiveTorrentCount { get; set; }
 
         /// <summary>
         /// Download speed
         /// </summary>
         [JsonProperty("downloadSpeed")]
-        public int downloadSpeed{ get; set; }
+        public long? downloadSpeed{ get; set; }
 
         /// <summary>
         /// Paused torrent count
         /// </summary>
         [JsonProperty("pausedTorrentCount")]
-        public int pausedTorrentCount{ get; set; }
+        public long? pausedTorrentCount{ get; set; }
 
         /// <summary>
         /// Torrent count
         /// </summary>
         [JsonProperty("torrentCount")]
-        public int torrentCount{ get; set; }
+        public long? torrentCount{ get; set; }
 
         /// <summary>
         /// Upload speed
         /// </summary>
         [JsonProperty("uploadSpeed")]
-        public int uploadSpeed{ get; set; }
+        public long? uploadSpeed{ get; set; }
    
         /// <summary>
         /// Cumulative stats
@@ -64,30 +64,30 @@ namespace Transmission.API.RPC.Entity
         /// Uploaded bytes
         /// </summary>
         [JsonProperty("uploadedBytes")]
-        public double uploadedBytes{ get; set; }
+        public long? UploadedBytes{ get; set; }
         
         /// <summary>
         /// Downloaded bytes
         /// </summary>
         [JsonProperty("downloadedBytes")]
-        public double DownloadedBytes{ get; set; }
+        public long? DownloadedBytes{ get; set; }
 
         /// <summary>
         /// Files added
         /// </summary>
         [JsonProperty("filesAdded")]
-        public int FilesAdded{ get; set; }
+        public long? FilesAdded{ get; set; }
 
         /// <summary>
         /// Session count
         /// </summary>
         [JsonProperty("SessionCount")]
-        public int SessionCount{ get; set; }
+        public long? SessionCount{ get; set; }
 
         /// <summary>
         /// Seconds active
         /// </summary>
         [JsonProperty("SecondsActive")]
-        public int SecondsActive{ get; set; }
+        public long? SecondsActive{ get; set; }
     }
 }

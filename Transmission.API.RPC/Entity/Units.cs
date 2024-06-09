@@ -22,7 +22,7 @@ namespace Transmission.API.RPC.Entity
         /// Speed bytes
         /// </summary>
         [JsonProperty("speed-bytes")]
-        public int? SpeedBytes { get; set; }
+        public long? SpeedBytes { get; set; }
 
         /// <summary>
         /// Size units
@@ -34,7 +34,7 @@ namespace Transmission.API.RPC.Entity
         /// Size bytes
         /// </summary>
         [JsonProperty("size-bytes")]
-        public int? SizeBytes { get; set; }
+        public long? SizeBytes { get; set; }
 
         /// <summary>
         /// Memory units
@@ -46,6 +46,6 @@ namespace Transmission.API.RPC.Entity
         /// Memory bytes
         /// </summary>
         [JsonProperty("memory-bytes")]
-        public int? MemoryBytes { get; set; }
+        public long? MemoryBytes { get; set; }
     }
 }

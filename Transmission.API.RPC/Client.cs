@@ -2,6 +2,8 @@
 using System.Text;
 using Transmission.API.RPC.Entity;
 using Transmission.API.RPC.Arguments;
+using System.IO;
+using System.Xml.Linq;
 
 namespace Transmission.API.RPC
 {
@@ -104,6 +106,18 @@ namespace Transmission.API.RPC
         public SessionInfo GetSessionInformation()
         {
             var task = GetSessionInformationAsync();
+            task.WaitAndUnwrapException();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Get information of current session (API: session-get)
+        /// </summary>
+		/// <param name="fields">Optional fields of session information</param>
+        /// <returns>Session information</returns>
+        public SessionInfo GetSessionInformation(string[] fields)
+        {
+            var task = GetSessionInformationAsync(fields);
             task.WaitAndUnwrapException();
             return task.Result;
         }
@@ -214,6 +228,7 @@ namespace Transmission.API.RPC
         #endregion
 
         #region Torrent Verify
+
         /// <summary>
         /// Verify torrents (API: torrent-verify)
         /// </summary>
@@ -230,7 +245,31 @@ namespace Transmission.API.RPC
         {
             TorrentVerifyAsync().WaitAndUnwrapException();
         }
+
         #endregion
+
+        #region Torrent Reannounce
+
+        /// <summary>
+        /// Reannounce torrents (API: torrent-reannounce)
+        /// </summary>
+        /// <param name="ids">A list of torrent id numbers, sha1 hash strings, or both</param>
+        public void TorrentReannounce(object[] ids)
+        {
+            TorrentReannounceAsync(ids).WaitAndUnwrapException();
+        }
+
+        /// <summary>
+        /// Reannounce recently active torrents (API: torrent-reannounce)
+        /// </summary>
+        public void TorrentReannounce()
+        {
+            TorrentReannounceAsync().WaitAndUnwrapException();
+        }
+
+        #endregion
+
+        #region Torrent Queue
 
         /// <summary>
         /// Move torrents in queue on top (API: queue-move-top)
@@ -268,6 +307,8 @@ namespace Transmission.API.RPC
             TorrentQueueMoveBottomAsync(ids).WaitAndUnwrapException();
         }
 
+        #endregion
+
         /// <summary>
         /// Set new location for torrents files (API: torrent-set-location)
         /// </summary>
@@ -292,15 +333,41 @@ namespace Transmission.API.RPC
             return task.Result;
         }
 
-        //method name not recognized
-        ///// <summary>
-        ///// Reannounce torrent (API: torrent-reannounce)
-        ///// </summary>
-        ///// <param name="ids"></param>
-        //public void ReannounceTorrents(object[] ids)
-        //{
-        //    ReannounceTorrentsAsync(ids).WaitAndUnwrapException();
-        //}
+        #endregion
+
+        #region Bandwidth Groups
+
+        /// <summary>
+        /// Get bandwidth groups (API: group-get)
+        /// </summary>
+        /// <returns></returns>
+        public BandwidthGroup[] BandwidthGroupGet()
+        {
+            var task = BandwidthGroupGetAsync();
+            task.WaitAndUnwrapException();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Get bandwidth groups (API: group-get)
+        /// </summary>
+        /// <param name="groups">Optional names of groups to get</param>
+        /// <returns></returns>
+        public BandwidthGroup[] BandwidthGroupGet(string[] groups)
+        {
+            var task = BandwidthGroupGetAsync(groups);
+            task.WaitAndUnwrapException();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Set bandwidth groups (API: group-set)
+        /// </summary>
+        /// <param name="group">A bandwidth group to set</param>
+        public void BandwidthGroupSet(BandwidthGroupSettings group)
+        {
+            BandwidthGroupGetAsync().WaitAndUnwrapException();
+        }
 
         #endregion
 
@@ -309,7 +376,7 @@ namespace Transmission.API.RPC
         /// See if your incoming peer port is accessible from the outside world (API: port-test)
         /// </summary>
         /// <returns>Accessible state</returns>
-        public bool PortTest()
+        public Tuple<bool, PortTestProtocol> PortTest()
         {
             var task = PortTestAsync();
             task.WaitAndUnwrapException();
@@ -331,12 +398,13 @@ namespace Transmission.API.RPC
         /// Get free space is available in a client-specified folder.
         /// </summary>
         /// <param name="path">The directory to query</param>
-        public long FreeSpace(string path)
+        public FreeSpace FreeSpace(string path)
         {
             var task = FreeSpaceAsync(path);
             task.WaitAndUnwrapException();
             return task.Result;
         }
+
         #endregion
     }
 }

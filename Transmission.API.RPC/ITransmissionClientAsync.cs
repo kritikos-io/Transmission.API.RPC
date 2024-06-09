@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Transmission.API.RPC.Arguments;
 using Transmission.API.RPC.Entity;
 
@@ -25,13 +26,21 @@ namespace Transmission.API.RPC
         /// Get free space is available in a client-specified folder.
         /// </summary>
         /// <param name="path">The directory to query</param>
-        Task<long> FreeSpaceAsync(string path);
+        Task<FreeSpace> FreeSpaceAsync(string path);
 
         /// <summary>
         /// Get information of current session (API: session-get)
         /// </summary>
+		/// <param name="fields">Fields of session information</param>
         /// <returns>Session information</returns>
         Task<SessionInfo> GetSessionInformationAsync();
+
+        /// <summary>
+        /// Get information of current session (API: session-get)
+        /// </summary>
+		/// <param name="fields">Optional fields of session information</param>
+        /// <returns>Session information</returns>
+        Task<SessionInfo> GetSessionInformationAsync(string[] fields);
 
         /// <summary>
         /// Get session stat
@@ -42,8 +51,8 @@ namespace Transmission.API.RPC
         /// <summary>
         /// See if your incoming peer port is accessible from the outside world (API: port-test)
         /// </summary>
-        /// <returns>Accessible state</returns>
-        Task<bool> PortTestAsync();
+        /// <returns>A Tuple with a boolean of whether the port test succeeded, and a PortTestProtocol enum of which protocol was used for the test</returns>
+        Task<Tuple<bool, PortTestProtocol>> PortTestAsync();
 
         /// <summary>
         /// Set information to current session (API: session-set)
@@ -161,5 +170,35 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <param name="ids">A list of torrent id numbers, sha1 hash strings, or both</param>
         Task TorrentVerifyAsync(object[] ids);
+
+        /// <summary>
+        /// Reannounce recently active torrents (API: torrent-reannounce)
+        /// </summary>
+        Task TorrentReannounceAsync();
+
+        /// <summary>
+        /// Reannounce torrents (API: torrent-reannounce)
+        /// </summary>
+        /// <param name="ids">A list of torrent id numbers, sha1 hash strings, or both</param>
+        Task TorrentReannounceAsync(object[] ids);
+
+        /// <summary>
+        /// Get bandwidth groups (API: group-get)
+        /// </summary>
+        /// <returns></returns>
+        Task<BandwidthGroup[]> BandwidthGroupGetAsync();
+
+        /// <summary>
+        /// Get bandwidth groups (API: group-get)
+        /// </summary>
+        /// <param name="groups">Optional names of groups to get</param>
+        /// <returns></returns>
+        Task<BandwidthGroup[]> BandwidthGroupGetAsync(string[] groups);
+
+        /// <summary>
+        /// Set bandwidth groups (API: group-set)
+        /// </summary>
+        /// <param name="group">A bandwidth group to set</param>
+        Task BandwidthGroupSetAsync(BandwidthGroupSettings group);
     }
 }

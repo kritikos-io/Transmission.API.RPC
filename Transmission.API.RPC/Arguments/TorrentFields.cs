@@ -24,6 +24,11 @@ namespace Transmission.API.RPC.Entity
         public const string ADDED_DATE = "addedDate";
 
         /// <summary>
+        /// availability
+        /// </summary>
+        public const string AVAILABILITY = "availability";
+
+        /// <summary>
         /// bandwidthPriority
         /// </summary>
         public const string BANDWIDTH_PRIORITY = "bandwidthPriority";
@@ -82,7 +87,7 @@ namespace Transmission.API.RPC.Entity
         /// editDate
         /// </summary>
         public const string EDIT_DATE = "editDate";
-
+        
         /// <summary>
         /// error
         /// </summary>
@@ -117,6 +122,11 @@ namespace Transmission.API.RPC.Entity
         /// fileStats
         /// </summary>
         public const string FILE_STATS = "fileStats";
+
+        /// <summary>
+        /// group
+        /// </summary>
+        public const string GROUP = "group";
 
         /// <summary>
         /// hashString
@@ -309,6 +319,11 @@ namespace Transmission.API.RPC.Entity
         public const string SEED_RATIO_MODE = "seedRatioMode";
 
         /// <summary>
+        /// sequentialDownload
+        /// </summary>
+        public const string SEQUENTIAL_DOWNLOAD = "sequentialDownload";
+
+        /// <summary>
         /// sizeWhenDone
         /// </summary>
         public const string SIZE_WHEN_DONE = "sizeWhenDone";
@@ -395,6 +410,7 @@ namespace Transmission.API.RPC.Entity
                     #region ALL FIELDS
                     ACTIVITY_DATE,
                     ADDED_DATE,
+                    AVAILABILITY,
                     BANDWIDTH_PRIORITY,
                     COMMENT,
                     CORRUPT_EVER,
@@ -414,6 +430,7 @@ namespace Transmission.API.RPC.Entity
                     FILE_COUNT,
                     FILES,
                     FILE_STATS,
+                    GROUP,
                     HASH_STRING,
                     HAVE_UNCHECKED,
                     HAVE_VALID,
@@ -452,6 +469,7 @@ namespace Transmission.API.RPC.Entity
                     SEED_IDLE_MODE,
                     SEED_RATIO_LIMIT,
                     SEED_RATIO_MODE,
+                    SEQUENTIAL_DOWNLOAD,
                     SIZE_WHEN_DONE,
                     START_DATE,
                     STATUS,

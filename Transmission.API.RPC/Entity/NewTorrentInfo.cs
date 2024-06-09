@@ -30,5 +30,10 @@ namespace Transmission.API.RPC.Entity
 		[JsonProperty("hashString")]
 		public string HashString { get; set; }
 
+        /// <summary>
+        /// Whether the torrent is a duplicate of an existing torrent (add failed)
+        /// </summary>
+        public bool Duplicate { get; set; }
+
 	}
 }
