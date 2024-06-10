@@ -131,25 +131,19 @@ namespace Transmission.API.RPC
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        public async Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields, bool asObjects = false)
+        public async Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("fields", fields);
             arguments.Add("ids", "recently-active");
-
-            if (asObjects) arguments.Add("format", "objects");
-            else arguments.Add("format", "table");
 
             var request = new TransmissionRequest("torrent-get", arguments);
             var response = await SendRequestAsync(request);
 
             if (response == null) return null;
 
-            TransmissionTorrents? torrents;
-            if (asObjects) torrents = response.Arguments.ToObject<TransmissionTorrents>();
-            else torrents = TorrentInfoConverter.ConvertFromJObject(response.Arguments);
+            TransmissionTorrents? torrents = response.Arguments.ToObject<TransmissionTorrents>();
 
             return torrents;
         }
@@ -158,16 +152,12 @@ namespace Transmission.API.RPC
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        public async Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, bool asObjects = false, params long[] ids)
+        public async Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, params long[] ids)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("fields", fields);
-
-            if (asObjects) arguments.Add("format", "objects");
-            else arguments.Add("format", "table");
 
             if (ids != null && ids.Length > 0)
                 arguments.Add("ids", ids);
@@ -177,9 +167,7 @@ namespace Transmission.API.RPC
 
             if (response == null) return null;
 
-            TransmissionTorrents? torrents;
-            if (asObjects) torrents = response?.Arguments.ToObject<TransmissionTorrents>();
-            else torrents = TorrentInfoConverter.ConvertFromJObject(response.Arguments);
+            TransmissionTorrents? torrents = response?.Arguments.ToObject<TransmissionTorrents>();
 
             return torrents;
         }

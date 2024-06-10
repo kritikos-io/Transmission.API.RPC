@@ -22,7 +22,7 @@ namespace Transmission.API.RPC.Common
         /// <summary>
         /// Uniquely identifies which request this is a response to
         /// </summary>
-        public int? Tag;
+        public int? Tag { get; }
 
         /// <summary>
         /// Data

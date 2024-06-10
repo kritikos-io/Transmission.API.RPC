@@ -70,18 +70,16 @@ namespace Transmission.API.RPC
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields, bool asObjects = false);
+        Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields);
 
         /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, bool asObjects = false, params long[] ids);
+        Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, params long[] ids);
 
         /// <summary>
         /// Move torrents to bottom in queue  (API: queue-move-bottom)

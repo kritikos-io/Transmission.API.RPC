@@ -150,11 +150,10 @@ namespace Transmission.API.RPC
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        public TransmissionTorrents TorrentGetRecentlyActive(string[] fields, bool asObjects = false)
+        public TransmissionTorrents TorrentGetRecentlyActive(string[] fields)
         {
-            var task = TorrentGetRecentlyActiveAsync(fields, asObjects);
+            var task = TorrentGetRecentlyActiveAsync(fields);
             task.WaitAndUnwrapException();
             return task.Result;
         }
@@ -163,12 +162,11 @@ namespace Transmission.API.RPC
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
-        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        public TransmissionTorrents TorrentGet(string[] fields, bool asObjects = false, params long[] ids)
+        public TransmissionTorrents TorrentGet(string[] fields, params long[] ids)
         {
-            var task = TorrentGetAsync(fields, asObjects, ids);
+            var task = TorrentGetAsync(fields, ids);
             task.WaitAndUnwrapException();
             return task.Result;
         }
