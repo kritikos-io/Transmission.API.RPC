@@ -1,4 +1,5 @@
-﻿using JDRemote.Backends.Transmission;
+﻿#nullable enable
+using JDRemote.Backends.Transmission;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Transmission.API.RPC.Entity
         /// The torrent's unique Id.
         /// </summary>
         [JsonProperty("id")]
-        public long? Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Activity date
@@ -36,7 +37,7 @@ namespace Transmission.API.RPC.Entity
         /// </summary>
         [JsonProperty("availability")]
         [JsonConverter(typeof(IntOrArrayConverter))] // Without this converter, Transmission < 4.0.0 leads to an error.
-        public long?[] Availability { get; set; }
+        public long[]? Availability { get; set; }
 
         /// <summary>
         /// Torrents bandwidth priority
@@ -48,7 +49,7 @@ namespace Transmission.API.RPC.Entity
         /// Comment
         /// </summary>
         [JsonProperty("comment")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         /// <summary>
         /// Corrupt ever
@@ -60,7 +61,7 @@ namespace Transmission.API.RPC.Entity
         /// Creator
         /// </summary>
         [JsonProperty("creator")]
-        public string Creator { get; set; }
+        public string? Creator { get; set; }
 
         /// <summary>
         /// Date created
@@ -84,7 +85,7 @@ namespace Transmission.API.RPC.Entity
         /// Download directory
         /// </summary>
         [JsonProperty("downloadDir")]
-        public string DownloadDir { get; set; }
+        public string? DownloadDir { get; set; }
 
         /// <summary>
         /// Downloaded ever
@@ -120,7 +121,7 @@ namespace Transmission.API.RPC.Entity
         /// Error string
         /// </summary>
         [JsonProperty("errorString")]
-        public string ErrorString { get; set; }
+        public string? ErrorString { get; set; }
 
         /// <summary>
         /// ETA
@@ -144,25 +145,25 @@ namespace Transmission.API.RPC.Entity
         /// Files
         /// </summary>
         [JsonProperty("files")]
-        public TransmissionTorrentFiles[] Files { get; set; }
+        public TransmissionTorrentFiles[]? Files { get; set; }
 
         /// <summary>
         /// File stats
         /// </summary>
         [JsonProperty("fileStats")]
-        public TransmissionTorrentFileStats[] FileStats { get; set; }
+        public TransmissionTorrentFileStats[]? FileStats { get; set; }
 
         /// <summary>
         /// Group
         /// </summary>
         [JsonProperty("group")]
-        public string Group { get; set; }
+        public string? Group { get; set; }
 
         /// <summary>
         /// Hash string
         /// </summary>
         [JsonProperty("hashString")]
-        public string HashString { get; set; }
+        public string? HashString { get; set; }
 
         /// <summary>
         /// Have unchecked
@@ -204,7 +205,7 @@ namespace Transmission.API.RPC.Entity
         /// Labels
         /// </summary>
         [JsonProperty("labels")]
-        public string[] Labels { get; set; }
+        public string[]? Labels { get; set; }
 
         /// <summary>
         /// Left until done
@@ -216,7 +217,7 @@ namespace Transmission.API.RPC.Entity
         /// Magnet link
         /// </summary>
         [JsonProperty("magnetLink")]
-        public string MagnetLink { get; set; }
+        public string? MagnetLink { get; set; }
 
         /// <summary>
         /// Manual announce time
@@ -240,7 +241,7 @@ namespace Transmission.API.RPC.Entity
         /// Name
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Peer limit
@@ -252,7 +253,7 @@ namespace Transmission.API.RPC.Entity
         /// Peers
         /// </summary>
         [JsonProperty("peers")]
-        public TransmissionTorrentPeers[] Peers { get; set; }
+        public TransmissionTorrentPeers[]? Peers { get; set; }
 
         /// <summary>
         /// Peers connected
@@ -264,7 +265,7 @@ namespace Transmission.API.RPC.Entity
         /// Peers from
         /// </summary>
         [JsonProperty("peersFrom")]
-        public TransmissionTorrentPeersFrom PeersFrom { get; set; }
+        public TransmissionTorrentPeersFrom? PeersFrom { get; set; }
 
         /// <summary>
         /// Peers getting from us
@@ -294,7 +295,7 @@ namespace Transmission.API.RPC.Entity
         /// Pieces
         /// </summary>
         [JsonProperty("pieces")]
-        public string Pieces { get; set; }
+        public string? Pieces { get; set; }
 
         /// <summary>
         /// Piece count
@@ -312,13 +313,13 @@ namespace Transmission.API.RPC.Entity
         /// Priorities
         /// </summary>
         [JsonProperty("priorities")]
-        public long?[] Priorities { get; set; }
+        public long[]? Priorities { get; set; }
 
         /// <summary>
         /// Primary mime type
         /// </summary>
         [JsonProperty("primary-mime-type")]
-        public string PrimaryMimeType { get; set; }
+        public string? PrimaryMimeType { get; set; }
 
         /// <summary>
         /// Queue position
@@ -408,7 +409,7 @@ namespace Transmission.API.RPC.Entity
         /// Trackers
         /// </summary>
         [JsonProperty("trackers")]
-        public TransmissionTorrentTrackers[] Trackers { get; set; }
+        public TransmissionTorrentTrackers[]? Trackers { get; set; }
 
         /// <summary>
         /// Tracker list:
@@ -416,13 +417,13 @@ namespace Transmission.API.RPC.Entity
         /// line between tiers
         /// </summary>
         [JsonProperty("trackerList")]
-        public string TrackerList { get; set; }
+        public string? TrackerList { get; set; }
 
         /// <summary>
         /// Tracker stats
         /// </summary>
         [JsonProperty("trackerStats")]
-        public TransmissionTorrentTrackerStats[] TrackerStats { get; set; }
+        public TransmissionTorrentTrackerStats[]? TrackerStats { get; set; }
 
         /// <summary>
         /// Total size
@@ -434,7 +435,7 @@ namespace Transmission.API.RPC.Entity
         /// Torrent file
         /// </summary>
         [JsonProperty("torrentFile")]
-        public string TorrentFile { get; set; }
+        public string? TorrentFile { get; set; }
 
         /// <summary>
         /// Uploaded ever
@@ -464,13 +465,13 @@ namespace Transmission.API.RPC.Entity
         /// Wanted
         /// </summary>
         [JsonProperty("wanted")]
-        public bool?[] Wanted { get; set; }
+        public bool[]? Wanted { get; set; }
 
         /// <summary>
         /// Web seeds
         /// </summary>
         [JsonProperty("webseeds")]
-        public string[] Webseeds { get; set; }
+        public string[]? Webseeds { get; set; }
 
         /// <summary>
         /// Web seeds sending to us
@@ -500,7 +501,7 @@ namespace Transmission.API.RPC.Entity
         /// Name
         /// </summary>
         [JsonProperty("name")]
-        public string Name{ get; set; }
+        public string? Name{ get; set; }
 
         /// <summary>
         /// First piece index of file
@@ -548,13 +549,13 @@ namespace Transmission.API.RPC.Entity
         /// Address
         /// </summary>
         [JsonProperty("address")]
-        public string Address{ get; set; }
+        public string? Address{ get; set; }
 
         /// <summary>
         /// Client name
         /// </summary>
         [JsonProperty("clientName")]
-        public string ClientName{ get; set; }
+        public string? ClientName{ get; set; }
 
         /// <summary>
         /// Client is choked
@@ -572,7 +573,7 @@ namespace Transmission.API.RPC.Entity
         /// Flag string
         /// </summary>
         [JsonProperty("flagStr")]
-        public string FlagStr{ get; set; }
+        public string? FlagStr{ get; set; }
 
         /// <summary>
         /// Is downloading from
@@ -698,25 +699,25 @@ namespace Transmission.API.RPC.Entity
         /// Announce
         /// </summary>
         [JsonProperty("announce")]
-        public string Announce{ get; set; }
+        public string? Announce{ get; set; }
 
         /// <summary>
         /// Id
         /// </summary>
         [JsonProperty("id")]
-        public long? Id{ get; set; }
+        public long Id{ get; set; }
 
         /// <summary>
         /// Scrape
         /// </summary>
         [JsonProperty("scrape")]
-        public string Scrape{ get; set; }
+        public string? Scrape{ get; set; }
 
         /// <summary>
         /// Site name
         /// </summary>
         [JsonProperty("sitename")]
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; }
 
         /// <summary>
         /// Tier
@@ -734,7 +735,7 @@ namespace Transmission.API.RPC.Entity
         /// Announce
         /// </summary>
         [JsonProperty("announce")]
-        public string Announce{ get; set; }
+        public string? Announce{ get; set; }
 
         /// <summary>
         /// Announce state
@@ -764,7 +765,7 @@ namespace Transmission.API.RPC.Entity
         /// Host
         /// </summary>
         [JsonProperty("host")]
-        public string Host{ get; set; }
+        public string? Host{ get; set; }
 
         /// <summary>
         /// Is backup
@@ -788,7 +789,7 @@ namespace Transmission.API.RPC.Entity
         /// Last announce result 
         /// </summary>
         [JsonProperty("lastAnnounceResult")]
-        public string LastAnnounceResult{ get; set; }
+        public string? LastAnnounceResult{ get; set; }
 
         /// <summary>
         /// Last announce succeeded
@@ -806,7 +807,7 @@ namespace Transmission.API.RPC.Entity
         /// Last scrape result
         /// </summary>
         [JsonProperty("lastScrapeResult")]
-        public string LastScrapeResult{ get; set; }
+        public string? LastScrapeResult{ get; set; }
 
         /// <summary>
         /// Last announce timed out
@@ -848,7 +849,7 @@ namespace Transmission.API.RPC.Entity
         /// Scrape
         /// </summary>
         [JsonProperty("scrape")]
-        public string Scrape{ get; set; }
+        public string? Scrape{ get; set; }
 
         /// <summary>
         /// Tier
@@ -890,11 +891,11 @@ namespace Transmission.API.RPC.Entity
         /// Site name
         /// </summary>
         [JsonProperty("sitename")]
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; }
     }
 
     /// <summary>
-    /// Contains arrays of torrents and removed torrents
+    /// Contains arrays of torrents, and removed torrents in an integer array
     /// </summary>
     public class TransmissionTorrents
     {
@@ -902,12 +903,12 @@ namespace Transmission.API.RPC.Entity
         /// Array of torrents
         /// </summary>
         [JsonProperty("torrents")]
-        public TorrentInfo[] Torrents{ get; set; }
+        public TorrentInfo[]? Torrents{ get; set; }
 
         /// <summary>
         /// Array of torrent-id numbers of recently-removed torrents
         /// </summary>
         [JsonProperty("removed")]
-        public long?[] Removed{ get; set; }
+        public long[]? Removed{ get; set; }
     }
 }

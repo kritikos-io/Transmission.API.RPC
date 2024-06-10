@@ -44,7 +44,7 @@ namespace Transmission.API.RPC.Test
             var newTorrentInfo = client.TorrentAdd(torrent);
 			
 			Assert.IsNotNull(newTorrentInfo);
-			Assert.IsTrue(newTorrentInfo.ID != 0);
+			Assert.IsTrue(newTorrentInfo.Id != 0);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace Transmission.API.RPC.Test
             var newTorrentInfo = client.TorrentAdd(torrent);
 
             Assert.IsNotNull(newTorrentInfo);
-            Assert.IsTrue(newTorrentInfo.ID != 0);
+            Assert.IsTrue(newTorrentInfo.Id != 0);
         }
 
         [TestMethod]
@@ -84,13 +84,13 @@ namespace Transmission.API.RPC.Test
             var trackerCount = torrentInfo.Trackers.Length;
 			TorrentSettings settings = new TorrentSettings()
 			{
-				IDs = new object[] { torrentInfo.HashString },
-				TrackerRemove = new int[] { trackerInfo.ID }
+				Ids = new object[] { torrentInfo.HashString },
+				TrackerRemove = new long[] { trackerInfo.Id }
 			};
 
 			client.TorrentSet(settings);
 
-			torrentsInfo = client.TorrentGet(TorrentFields.ALL_FIELDS, torrentInfo.ID);
+			torrentsInfo = client.TorrentGet(TorrentFields.ALL_FIELDS, false, torrentInfo.Id);
 			torrentInfo = torrentsInfo.Torrents.FirstOrDefault();
 
 			Assert.IsFalse(trackerCount == torrentInfo.Trackers.Length);
@@ -103,10 +103,10 @@ namespace Transmission.API.RPC.Test
             var torrentInfo = torrentsInfo.Torrents.FirstOrDefault();
             Assert.IsNotNull(torrentInfo, "Torrent not found");
 
-            var result = client.TorrentRenamePath(torrentInfo.ID, torrentInfo.Files[0].Name, "test_" + torrentInfo.Files[0].Name);
+            var result = client.TorrentRenamePath(torrentInfo.Id, torrentInfo.Files[0].Name, "test_" + torrentInfo.Files[0].Name);
 
             Assert.IsNotNull(result, "Torrent not found");
-            Assert.IsTrue(result.ID != 0);
+            Assert.IsTrue(result.Id != 0);
         }
 
         [TestMethod]
@@ -116,11 +116,11 @@ namespace Transmission.API.RPC.Test
 			var torrentInfo = torrentsInfo.Torrents.FirstOrDefault();
 			Assert.IsNotNull(torrentInfo, "Torrent not found");
 
-			client.TorrentRemove(new int[] { torrentInfo.ID });
+			client.TorrentRemove(new long[] { torrentInfo.Id });
 
 			torrentsInfo = client.TorrentGet(TorrentFields.ALL_FIELDS);
 
-			Assert.IsFalse(torrentsInfo.Torrents.Any(t => t.ID == torrentInfo.ID));
+			Assert.IsFalse(torrentsInfo.Torrents.Any(t => t.Id == torrentInfo.Id));
 		}
 
         #endregion
@@ -142,7 +142,7 @@ namespace Transmission.API.RPC.Test
             var sessionInformation = client.GetSessionInformation();
 
 			//Save old speed limit up
-			var oldSpeedLimit = sessionInformation.SpeedLimitUp;
+			var oldSpeedLimit = (long)sessionInformation.SpeedLimitUp;
 
             //Set new session settings
 			client.SetSessionSettings(new SessionSettings() { SpeedLimitUp = 100 });

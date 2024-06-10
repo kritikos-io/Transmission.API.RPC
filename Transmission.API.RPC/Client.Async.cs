@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,11 +43,11 @@ namespace Transmission.API.RPC
         /// Get session stat
         /// </summary>
         /// <returns>Session stat</returns>
-        public async Task<Statistic> GetSessionStatisticAsync()
+        public async Task<Statistic?> GetSessionStatisticAsync()
         {
             var request = new TransmissionRequest("session-stats");
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<Statistic>();
+            var result = response?.Arguments.ToObject<Statistic>();
             return result;
         }
 
@@ -54,11 +55,11 @@ namespace Transmission.API.RPC
         /// Get information of current session (API: session-get)
         /// </summary>
         /// <returns>Session information</returns>
-        public async Task<SessionInfo> GetSessionInformationAsync()
+        public async Task<SessionInfo?> GetSessionInformationAsync()
         {
             var request = new TransmissionRequest("session-get");
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<SessionInfo>();
+            var result = response?.Arguments.ToObject<SessionInfo>();
             return result;
         }
 
@@ -69,14 +70,14 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <param name="fields">Optional fields of session information</param>
         /// <returns>Session information</returns>
-        public async Task<SessionInfo> GetSessionInformationAsync(string[] fields)
+        public async Task<SessionInfo?> GetSessionInformationAsync(string[] fields)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("fields", fields);
 
             var request = new TransmissionRequest("session-get", arguments);
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<SessionInfo>();
+            var result = response?.Arguments.ToObject<SessionInfo>();
             return result;
         }
         #endregion
@@ -87,30 +88,30 @@ namespace Transmission.API.RPC
         /// Add torrent (API: torrent-add)
         /// </summary>
         /// <returns>Torrent info (ID, Name and HashString)</returns>
-        public async Task<NewTorrentInfo> TorrentAddAsync(NewTorrent torrent)
+        public async Task<NewTorrentInfo?> TorrentAddAsync(NewTorrent torrent)
         {
             if (String.IsNullOrWhiteSpace(torrent.Metainfo) && String.IsNullOrWhiteSpace(torrent.Filename))
-                throw new Exception("Either \"filename\" or \"metainfo\" must be included.");
+                throw new ArgumentException("Either \"filename\" or \"metainfo\" must be included.");
 
             var request = new TransmissionRequest("torrent-add", torrent);
             var response = await SendRequestAsync(request);
-            var jObject = response.Deserialize<JObject>();
+            var jObject = response?.Arguments;
 
             if (jObject == null || jObject.First == null)
                 return null;
 
-            NewTorrentInfo result = null;
-            JToken value = null;
+            NewTorrentInfo? result = null;
+            JToken? value = null;
 
             if (jObject.TryGetValue("torrent-duplicate", out value))
             {
                 result = JsonConvert.DeserializeObject<NewTorrentInfo>(value.ToString());
-                result.Duplicate = true;
+                if (result != null) result.Duplicate = true;
             }
             else if (jObject.TryGetValue("torrent-added", out value))
             {
                 result = JsonConvert.DeserializeObject<NewTorrentInfo>(value.ToString());
-                result.Duplicate = false;
+                if (result != null) result.Duplicate = false;
             }
 
             return result;
@@ -130,41 +131,57 @@ namespace Transmission.API.RPC
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        public async Task<TransmissionTorrents> TorrentGetRecentlyActiveAsync(string[] fields)
+        public async Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields, bool asObjects = false)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("fields", fields);
             arguments.Add("ids", "recently-active");
 
+            if (asObjects) arguments.Add("format", "objects");
+            else arguments.Add("format", "table");
+
             var request = new TransmissionRequest("torrent-get", arguments);
-
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<TransmissionTorrents>();
 
-            return result;
+            if (response == null) return null;
+
+            TransmissionTorrents? torrents;
+            if (asObjects) torrents = response.Arguments.ToObject<TransmissionTorrents>();
+            else torrents = TorrentInfoConverter.ConvertFromJObject(response.Arguments);
+
+            return torrents;
         }
 
         /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        public async Task<TransmissionTorrents> TorrentGetAsync(string[] fields, params int[] ids)
+        public async Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, bool asObjects = false, params long[] ids)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("fields", fields);
+
+            if (asObjects) arguments.Add("format", "objects");
+            else arguments.Add("format", "table");
 
             if (ids != null && ids.Length > 0)
                 arguments.Add("ids", ids);
 
             var request = new TransmissionRequest("torrent-get", arguments);
-
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<TransmissionTorrents>();
 
-            return result;
+            if (response == null) return null;
+
+            TransmissionTorrents? torrents;
+            if (asObjects) torrents = response?.Arguments.ToObject<TransmissionTorrents>();
+            else torrents = TorrentInfoConverter.ConvertFromJObject(response.Arguments);
+
+            return torrents;
         }
 
         /// <summary>
@@ -172,7 +189,7 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <param name="ids">Torrents id</param>
         /// <param name="deleteData">Remove data</param>
-        public async Task TorrentRemoveAsync(int[] ids, bool deleteData = false)
+        public async Task TorrentRemoveAsync(long[] ids, bool deleteData = false)
         {
             var arguments = new Dictionary<string, object>();
 
@@ -304,7 +321,7 @@ namespace Transmission.API.RPC
         /// Move torrents in queue on top (API: queue-move-top)
         /// </summary>
         /// <param name="ids">Torrents id</param>
-        public async Task TorrentQueueMoveTopAsync(int[] ids)
+        public async Task TorrentQueueMoveTopAsync(long[] ids)
         {
             var request = new TransmissionRequest("queue-move-top", new Dictionary<string, object> { { "ids", ids } });
             var response = await SendRequestAsync(request);
@@ -314,7 +331,7 @@ namespace Transmission.API.RPC
         /// Move up torrents in queue (API: queue-move-up)
         /// </summary>
         /// <param name="ids"></param>
-        public async Task TorrentQueueMoveUpAsync(int[] ids)
+        public async Task TorrentQueueMoveUpAsync(long[] ids)
         {
             var request = new TransmissionRequest("queue-move-up", new Dictionary<string, object> { { "ids", ids } });
             var response = await SendRequestAsync(request);
@@ -324,7 +341,7 @@ namespace Transmission.API.RPC
         /// Move down torrents in queue (API: queue-move-down)
         /// </summary>
         /// <param name="ids"></param>
-        public async Task TorrentQueueMoveDownAsync(int[] ids)
+        public async Task TorrentQueueMoveDownAsync(long[] ids)
         {
             var request = new TransmissionRequest("queue-move-down", new Dictionary<string, object> { { "ids", ids } });
             var response = await SendRequestAsync(request);
@@ -334,7 +351,7 @@ namespace Transmission.API.RPC
         /// Move torrents to bottom in queue  (API: queue-move-bottom)
         /// </summary>
         /// <param name="ids"></param>
-        public async Task TorrentQueueMoveBottomAsync(int[] ids)
+        public async Task TorrentQueueMoveBottomAsync(long[] ids)
         {
             var request = new TransmissionRequest("queue-move-bottom", new Dictionary<string, object> { { "ids", ids } });
             var response = await SendRequestAsync(request);
@@ -348,7 +365,7 @@ namespace Transmission.API.RPC
         /// <param name="ids">Torrent ids</param>
         /// <param name="location">The new torrent location</param>
         /// <param name="move">Move from previous location</param>
-        public async Task TorrentSetLocationAsync(int[] ids, string location, bool move)
+        public async Task TorrentSetLocationAsync(long[] ids, string location, bool move)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("ids", ids);
@@ -365,17 +382,17 @@ namespace Transmission.API.RPC
         /// <param name="id">The torrent whose path will be renamed</param>
         /// <param name="path">The path to the file or folder that will be renamed</param>
         /// <param name="name">The file or folder's new name</param>
-        public async Task<RenameTorrentInfo> TorrentRenamePathAsync(int id, string path, string name)
+        public async Task<RenameTorrentInfo?> TorrentRenamePathAsync(long id, string path, string name)
         {
             var arguments = new Dictionary<string, object>();
-            arguments.Add("ids", new int[] { id });
+            arguments.Add("ids", new long[] { id });
             arguments.Add("path", path);
             arguments.Add("name", name);
 
             var request = new TransmissionRequest("torrent-rename-path", arguments);
             var response = await SendRequestAsync(request);
 
-            var result = response.Deserialize<RenameTorrentInfo>();
+            var result = response?.Arguments.ToObject<RenameTorrentInfo>();
 
             return result;
         }
@@ -388,12 +405,12 @@ namespace Transmission.API.RPC
         /// Get bandwidth groups (API: group-get)
         /// </summary>
         /// <returns></returns>
-        public async Task<BandwidthGroup[]> BandwidthGroupGetAsync()
+        public async Task<BandwidthGroup[]?> BandwidthGroupGetAsync()
         {
             var request = new TransmissionRequest("group-get");
 
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<BandwidthGroup[]>();
+            var result = response?.Arguments.ToObject<BandwidthGroup[]>();
 
             return result;
         }
@@ -403,7 +420,7 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <param name="groups">Optional names of groups to get</param>
         /// <returns></returns>
-        public async Task<BandwidthGroup[]> BandwidthGroupGetAsync(string[] groups)
+        public async Task<BandwidthGroup[]?> BandwidthGroupGetAsync(string[] groups)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("group", groups);
@@ -411,7 +428,7 @@ namespace Transmission.API.RPC
             var request = new TransmissionRequest("group-get", arguments);
 
             var response = await SendRequestAsync(request);
-            var result = response.Deserialize<BandwidthGroup[]>();
+            var result = response?.Arguments.ToObject<BandwidthGroup[]>();
 
             return result;
         }
@@ -434,36 +451,39 @@ namespace Transmission.API.RPC
         /// See if your incoming peer port is accessible from the outside world (API: port-test)
         /// </summary>
         /// <returns>A Tuple with a boolean of whether the port test succeeded, and a PortTestProtocol enum of which protocol was used for the test</returns>
-        public async Task<Tuple<bool, PortTestProtocol>> PortTestAsync()
+        public async Task<Tuple<bool?, PortTestProtocol>> PortTestAsync()
         {
             var request = new TransmissionRequest("port-test");
             var response = await SendRequestAsync(request);
 
-            var data = response.Deserialize<JObject>();
-            var result = (bool)data.GetValue("port-is-open");
+            var data = response?.Arguments;
+            var result = (bool?)data?.GetValue("port-is-open");
             PortTestProtocol protocol = PortTestProtocol.Unknown;
-            if (data.TryGetValue("ipProtocol", out var protocolValue))
+            if (data?.TryGetValue("ipProtocol", out var protocolValue) == true)
             {
-                switch ((string)protocolValue)
+                if (protocolValue != null)
                 {
-                    case "ipv4": protocol = PortTestProtocol.IPv4; break;
-                    case "ipv6": protocol = PortTestProtocol.IPV6; break;
+                    switch ((string?)protocolValue)
+                    {
+                        case "ipv4": protocol = PortTestProtocol.IPv4; break;
+                        case "ipv6": protocol = PortTestProtocol.IPV6; break;
+                    }
                 }
             }
-            return new Tuple<bool, PortTestProtocol>(result, protocol);
+            return new Tuple<bool?, PortTestProtocol>(result, protocol);
         }
 
         /// <summary>
         /// Update blocklist (API: blocklist-update)
         /// </summary>
         /// <returns>Blocklist size</returns>
-        public async Task<int> BlocklistUpdateAsync()
+        public async Task<long?> BlocklistUpdateAsync()
         {
             var request = new TransmissionRequest("blocklist-update");
             var response = await SendRequestAsync(request);
 
-            var data = response.Deserialize<JObject>();
-            var result = (int)data.GetValue("blocklist-size");
+            var data = response?.Arguments;
+            var result = (long?)data?.GetValue("blocklist-size");
             return result;
         }
 
@@ -471,7 +491,7 @@ namespace Transmission.API.RPC
         /// Get free space is available in a client-specified folder.
         /// </summary>
         /// <param name="path">The directory to query</param>
-        public async Task<FreeSpace> FreeSpaceAsync(string path)
+        public async Task<FreeSpace?> FreeSpaceAsync(string path)
         {
             var arguments = new Dictionary<string, object>();
             arguments.Add("path", path);
@@ -479,15 +499,15 @@ namespace Transmission.API.RPC
             var request = new TransmissionRequest("free-space", arguments);
             var response = await SendRequestAsync(request);
 
-            var data = response.Deserialize<FreeSpace>();
+            var data = response?.Arguments.ToObject<FreeSpace>();
             return data;
         }
 
         #endregion
 
-        private async Task<TransmissionResponse> SendRequestAsync(TransmissionRequest request)
+        private async Task<TransmissionResponse?> SendRequestAsync(TransmissionRequest request)
         {
-            TransmissionResponse result = new TransmissionResponse();
+            TransmissionResponse? result = null;
 
             request.Tag = ++CurrentTag;
 
@@ -508,10 +528,10 @@ namespace Transmission.API.RPC
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var responseString = await httpResponse.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<TransmissionResponse>(responseString);
+                    result = new TransmissionResponse(responseString);
 
                     if (result.Result != "success")
-                        throw new Exception(result.Result);
+                        throw new RequestFailedException(result.Result);
                 }
                 else if (httpResponse.StatusCode == HttpStatusCode.Conflict)
                 {
@@ -521,7 +541,7 @@ namespace Transmission.API.RPC
                         if (httpResponse.Headers.TryGetValues("X-Transmission-Session-Id", out var values))
                             SessionID = values.First();
                         else
-                            throw new Exception("Session ID Error");
+                            throw new SessionIdException();
 
                         result = await SendRequestAsync(request);
                     }

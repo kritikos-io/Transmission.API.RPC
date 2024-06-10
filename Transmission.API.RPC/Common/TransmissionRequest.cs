@@ -10,13 +10,25 @@ namespace Transmission.API.RPC.Common
 	/// <summary>
 	/// Transmission request 
 	/// </summary>
-	public class TransmissionRequest : CommunicateBase
+	public class TransmissionRequest
 	{
 		/// <summary>
 		/// Name of the method to invoke
 		/// </summary>
 		[JsonProperty("method")]
 		public string Method;
+
+        /// <summary>
+        /// Data
+        /// </summary>
+        [JsonProperty("arguments")]
+        public Dictionary<string, object> Arguments;
+
+        /// <summary>
+        /// Number (id)
+        /// </summary>
+        [JsonProperty("tag")]
+        public long Tag;
 
         /// <summary>
         /// Initialize request
@@ -48,5 +60,14 @@ namespace Transmission.API.RPC.Common
             this.Method = method;
             this.Arguments = arguments;
         }
-	}
+
+        /// <summary>
+        /// Convert to JSON string
+        /// </summary>
+        /// <returns></returns>
+        public virtual string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+    }
 }

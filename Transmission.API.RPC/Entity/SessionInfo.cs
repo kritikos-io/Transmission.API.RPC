@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿#nullable enable
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Transmission.API.RPC.Entity
         /// Location of the blocklist to use for "blocklist-update"
         /// </summary>
         [JsonProperty("blocklist-url")]
-        public string BlocklistUrl { get; set; }
+        public string? BlocklistUrl { get; set; }
 
         /// <summary>
         /// True means enabled
@@ -84,7 +85,7 @@ namespace Transmission.API.RPC.Entity
         /// Default announce URLs, one per line, and a blank line between tiers
         /// </summary>
         [JsonProperty("default-trackers")]
-        public string DefaultTrackers { get; set; }
+        public string? DefaultTrackers { get; set; }
 
         /// <summary>
         /// Allow DHT in public torrents
@@ -96,14 +97,14 @@ namespace Transmission.API.RPC.Entity
         /// Default path to download torrents
         /// </summary>
         [JsonProperty("download-dir")]
-        public string DownloadDirectory { get; set; }
+        public string? DownloadDirectory { get; set; }
 
         /// <summary>
         /// Free space in download dir
         /// </summary>
         [JsonProperty("download-dir-free-space")]
         [Obsolete("Obsolete since Transmission 4.0.0. Use the free-space method instead.")]
-        public string DownloadDirectoryFreeSpace { get; set; }
+        public string? DownloadDirectoryFreeSpace { get; set; }
 
         /// <summary>
         /// Max number of torrents to download at once (see download-queue-enabled)
@@ -121,7 +122,7 @@ namespace Transmission.API.RPC.Entity
         /// "required", "preferred", "tolerated"
         /// </summary>
         [JsonProperty("encryption")]
-        public string Encryption { get; set; }
+        public string? Encryption { get; set; }
 
         /// <summary>
         /// Torrents we're seeding will be stopped if they're idle for this long
@@ -139,7 +140,7 @@ namespace Transmission.API.RPC.Entity
         /// Path for incomplete torrents, when enabled
         /// </summary>
         [JsonProperty("incomplete-dir")]
-        public string IncompleteDirectory { get; set; }
+        public string? IncompleteDirectory { get; set; }
 
         /// <summary>
         /// True means keep torrents in incomplete-dir until done
@@ -211,13 +212,13 @@ namespace Transmission.API.RPC.Entity
         /// Session ID
         /// </summary>
         [JsonProperty("session-id")]
-        public string SessionId { get; set; }
+        public string? SessionId { get; set; }
 
         /// <summary>
         /// Filename of the script to run
         /// </summary>
         [JsonProperty("script-torrent-added-filename")]
-        public string ScriptTorrentAddedFilename { get; set; }
+        public string? ScriptTorrentAddedFilename { get; set; }
 
         /// <summary>
         /// Whether or not to call the "added" script
@@ -229,7 +230,7 @@ namespace Transmission.API.RPC.Entity
         /// Filename of the script to run
         /// </summary>
         [JsonProperty("script-torrent-done-filename")]
-        public string ScriptTorrentDoneFilename { get; set; }
+        public string? ScriptTorrentDoneFilename { get; set; }
 
         /// <summary>
         /// Whether or not to call the "done" script
@@ -241,7 +242,7 @@ namespace Transmission.API.RPC.Entity
         /// Filename of the script to run
         /// </summary>
         [JsonProperty("script-torrent-done-seeding-filename")]
-        public string ScriptTorrentDoneSeedingFilename { get; set; }
+        public string? ScriptTorrentDoneSeedingFilename { get; set; }
 
         /// <summary>
         /// Whether or not to call the "done seeding" script
@@ -313,7 +314,7 @@ namespace Transmission.API.RPC.Entity
         /// Units
         /// </summary>
         [JsonProperty("units")]
-        public Units Units { get; set; }
+        public Units? Units { get; set; }
 
         /// <summary>
         /// True means allow utp
@@ -325,7 +326,7 @@ namespace Transmission.API.RPC.Entity
         /// Location of transmission's configuration directory
         /// </summary>
         [JsonProperty("config-dir")]
-        public string ConfigDirectory{ get; set; }
+        public string? ConfigDirectory{ get; set; }
 
         /// <summary>
         /// The current RPC API version
@@ -343,12 +344,12 @@ namespace Transmission.API.RPC.Entity
         /// Current RPC API version in a semver-compatible string
         /// </summary>
         [JsonProperty("rpc-version-semver")]
-        public string RpcVersionSemver { get; set; }
+        public string? RpcVersionSemver { get; set; }
 
         /// <summary>
         /// long? version string "$version ($revision)"
         /// </summary>
         [JsonProperty("version")]
-        public string Version{ get; set; }
+        public string? Version{ get; set; }
     }
 }

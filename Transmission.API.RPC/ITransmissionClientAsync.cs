@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Transmission.API.RPC.Arguments;
 using Transmission.API.RPC.Entity;
@@ -15,7 +16,7 @@ namespace Transmission.API.RPC
         /// Update blocklist (API: blocklist-update)
         /// </summary>
         /// <returns>Blocklist size</returns>
-        Task<int> BlocklistUpdateAsync();
+        Task<long?> BlocklistUpdateAsync();
 
         /// <summary>
         /// Close current session (API: session-close)
@@ -26,32 +27,32 @@ namespace Transmission.API.RPC
         /// Get free space is available in a client-specified folder.
         /// </summary>
         /// <param name="path">The directory to query</param>
-        Task<FreeSpace> FreeSpaceAsync(string path);
+        Task<FreeSpace?> FreeSpaceAsync(string path);
 
         /// <summary>
         /// Get information of current session (API: session-get)
         /// </summary>
         /// <returns>Session information</returns>
-        Task<SessionInfo> GetSessionInformationAsync();
+        Task<SessionInfo?> GetSessionInformationAsync();
 
         /// <summary>
         /// Get information of current session (API: session-get)
         /// </summary>
 		/// <param name="fields">Optional fields of session information</param>
         /// <returns>Session information</returns>
-        Task<SessionInfo> GetSessionInformationAsync(string[] fields);
+        Task<SessionInfo?> GetSessionInformationAsync(string[] fields);
 
         /// <summary>
         /// Get session stat
         /// </summary>
         /// <returns>Session stat</returns>
-        Task<Statistic> GetSessionStatisticAsync();
+        Task<Statistic?> GetSessionStatisticAsync();
 
         /// <summary>
         /// See if your incoming peer port is accessible from the outside world (API: port-test)
         /// </summary>
         /// <returns>A Tuple with a boolean of whether the port test succeeded, and a PortTestProtocol enum of which protocol was used for the test</returns>
-        Task<Tuple<bool, PortTestProtocol>> PortTestAsync();
+        Task<Tuple<bool?, PortTestProtocol>> PortTestAsync();
 
         /// <summary>
         /// Set information to current session (API: session-set)
@@ -63,53 +64,55 @@ namespace Transmission.API.RPC
         /// Add torrent (API: torrent-add)
         /// </summary>
         /// <returns>Torrent info (ID, Name and HashString)</returns>
-        Task<NewTorrentInfo> TorrentAddAsync(NewTorrent torrent);
+        Task<NewTorrentInfo?> TorrentAddAsync(NewTorrent torrent);
 
         /// <summary>
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        Task<TransmissionTorrents> TorrentGetRecentlyActiveAsync(string[] fields);
+        Task<TransmissionTorrents?> TorrentGetRecentlyActiveAsync(string[] fields, bool asObjects = false);
 
         /// <summary>
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        Task<TransmissionTorrents> TorrentGetAsync(string[] fields, params int[] ids);
+        Task<TransmissionTorrents?> TorrentGetAsync(string[] fields, bool asObjects = false, params long[] ids);
 
         /// <summary>
         /// Move torrents to bottom in queue  (API: queue-move-bottom)
         /// </summary>
         /// <param name="ids"></param>
-        Task TorrentQueueMoveBottomAsync(int[] ids);
+        Task TorrentQueueMoveBottomAsync(long[] ids);
 
         /// <summary>
         /// Move down torrents in queue (API: queue-move-down)
         /// </summary>
         /// <param name="ids"></param>
-        Task TorrentQueueMoveDownAsync(int[] ids);
+        Task TorrentQueueMoveDownAsync(long[] ids);
 
         /// <summary>
         /// Move torrents in queue on top (API: queue-move-top)
         /// </summary>
         /// <param name="ids">Torrents id</param>
-        Task TorrentQueueMoveTopAsync(int[] ids);
+        Task TorrentQueueMoveTopAsync(long[] ids);
 
         /// <summary>
         /// Move up torrents in queue (API: queue-move-up)
         /// </summary>
         /// <param name="ids"></param>
-        Task TorrentQueueMoveUpAsync(int[] ids);
+        Task TorrentQueueMoveUpAsync(long[] ids);
 
         /// <summary>
         /// Remove torrents
         /// </summary>
         /// <param name="ids">Torrents id</param>
         /// <param name="deleteData">Remove local data</param>
-        Task TorrentRemoveAsync(int[] ids, bool deleteData = false);
+        Task TorrentRemoveAsync(long[] ids, bool deleteData = false);
 
         /// <summary>
         /// Rename a file or directory in a torrent (API: torrent-rename-path)
@@ -117,7 +120,7 @@ namespace Transmission.API.RPC
         /// <param name="id">The torrent whose path will be renamed</param>
         /// <param name="path">The path to the file or folder that will be renamed</param>
         /// <param name="name">The file or folder's new name</param>
-        Task<RenameTorrentInfo> TorrentRenamePathAsync(int id, string path, string name);
+        Task<RenameTorrentInfo?> TorrentRenamePathAsync(long id, string path, string name);
 
         /// <summary>
         /// Set torrent params (API: torrent-set)
@@ -131,7 +134,7 @@ namespace Transmission.API.RPC
         /// <param name="ids">Torrent ids</param>
         /// <param name="location">The new torrent location</param>
         /// <param name="move">Move from previous location</param>
-        Task TorrentSetLocationAsync(int[] ids, string location, bool move);
+        Task TorrentSetLocationAsync(long[] ids, string location, bool move);
 
         /// <summary>
         /// Start recently active torrents (API: torrent-start)
@@ -192,14 +195,14 @@ namespace Transmission.API.RPC
         /// Get bandwidth groups (API: group-get)
         /// </summary>
         /// <returns></returns>
-        Task<BandwidthGroup[]> BandwidthGroupGetAsync();
+        Task<BandwidthGroup[]?> BandwidthGroupGetAsync();
 
         /// <summary>
         /// Get bandwidth groups (API: group-get)
         /// </summary>
         /// <param name="groups">Optional names of groups to get</param>
         /// <returns></returns>
-        Task<BandwidthGroup[]> BandwidthGroupGetAsync(string[] groups);
+        Task<BandwidthGroup[]?> BandwidthGroupGetAsync(string[] groups);
 
         /// <summary>
         /// Set bandwidth groups (API: group-set)

@@ -36,7 +36,7 @@ namespace Transmission.API.RPC
         /// <summary>
         /// Current Tag
         /// </summary>
-        public int CurrentTag
+        public long CurrentTag
         {
             get;
             private set;
@@ -150,10 +150,11 @@ namespace Transmission.API.RPC
         /// Get fields of recently active torrents (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <returns>Torrents info</returns>
-        public TransmissionTorrents TorrentGetRecentlyActive(string[] fields)
+        public TransmissionTorrents TorrentGetRecentlyActive(string[] fields, bool asObjects = false)
         {
-            var task = TorrentGetRecentlyActiveAsync(fields);
+            var task = TorrentGetRecentlyActiveAsync(fields, asObjects);
             task.WaitAndUnwrapException();
             return task.Result;
         }
@@ -162,11 +163,12 @@ namespace Transmission.API.RPC
         /// Get fields of torrents from ids (API: torrent-get)
         /// </summary>
         /// <param name="fields">Fields of torrents</param>
+        /// <param name="asObjects">Whether to request the json as objects. Recommended to leave this set to false to use tables, which is slightly more performant.</param>
         /// <param name="ids">IDs of torrents (null or empty for get all torrents)</param>
         /// <returns>Torrents info</returns>
-        public TransmissionTorrents TorrentGet(string[] fields, params int[] ids)
+        public TransmissionTorrents TorrentGet(string[] fields, bool asObjects = false, params long[] ids)
         {
-            var task = TorrentGetAsync(fields, ids);
+            var task = TorrentGetAsync(fields, asObjects, ids);
             task.WaitAndUnwrapException();
             return task.Result;
         }
@@ -176,7 +178,7 @@ namespace Transmission.API.RPC
         /// </summary>
         /// <param name="ids">Torrents id</param>
         /// <param name="deleteData">Remove data</param>
-        public void TorrentRemove(int[] ids, bool deleteData = false)
+        public void TorrentRemove(long[] ids, bool deleteData = false)
         {
             TorrentRemoveAsync(ids, deleteData).WaitAndUnwrapException();
         }
@@ -287,7 +289,7 @@ namespace Transmission.API.RPC
         /// Move torrents in queue on top (API: queue-move-top)
         /// </summary>
         /// <param name="ids">Torrents id</param>
-        public void TorrentQueueMoveTop(int[] ids)
+        public void TorrentQueueMoveTop(long[] ids)
         {
             TorrentQueueMoveTopAsync(ids).WaitAndUnwrapException();
         }
@@ -296,7 +298,7 @@ namespace Transmission.API.RPC
         /// Move up torrents in queue (API: queue-move-up)
         /// </summary>
         /// <param name="ids"></param>
-        public void TorrentQueueMoveUp(int[] ids)
+        public void TorrentQueueMoveUp(long[] ids)
         {
             TorrentQueueMoveUpAsync(ids).WaitAndUnwrapException();
         }
@@ -305,7 +307,7 @@ namespace Transmission.API.RPC
         /// Move down torrents in queue (API: queue-move-down)
         /// </summary>
         /// <param name="ids"></param>
-        public void TorrentQueueMoveDown(int[] ids)
+        public void TorrentQueueMoveDown(long[] ids)
         {
             TorrentQueueMoveDownAsync(ids).WaitAndUnwrapException();
         }
@@ -314,7 +316,7 @@ namespace Transmission.API.RPC
         /// Move torrents to bottom in queue  (API: queue-move-bottom)
         /// </summary>
         /// <param name="ids"></param>
-        public void TorrentQueueMoveBottom(int[] ids)
+        public void TorrentQueueMoveBottom(long[] ids)
         {
             TorrentQueueMoveBottomAsync(ids).WaitAndUnwrapException();
         }
@@ -327,7 +329,7 @@ namespace Transmission.API.RPC
         /// <param name="ids">Torrent ids</param>
         /// <param name="location">The new torrent location</param>
         /// <param name="move">Move from previous location</param>
-        public void TorrentSetLocation(int[] ids, string location, bool move)
+        public void TorrentSetLocation(long[] ids, string location, bool move)
         {
             TorrentSetLocationAsync(ids, location, move).WaitAndUnwrapException();
         }
@@ -338,7 +340,7 @@ namespace Transmission.API.RPC
         /// <param name="id">The torrent whose path will be renamed</param>
         /// <param name="path">The path to the file or folder that will be renamed</param>
         /// <param name="name">The file or folder's new name</param>
-		public RenameTorrentInfo TorrentRenamePath(int id, string path, string name)
+		public RenameTorrentInfo TorrentRenamePath(long id, string path, string name)
         {
             var task = TorrentRenamePathAsync(id, path, name);
             task.WaitAndUnwrapException();
@@ -388,7 +390,7 @@ namespace Transmission.API.RPC
         /// See if your incoming peer port is accessible from the outside world (API: port-test)
         /// </summary>
         /// <returns>Accessible state</returns>
-        public Tuple<bool, PortTestProtocol> PortTest()
+        public Tuple<bool?, PortTestProtocol> PortTest()
         {
             var task = PortTestAsync();
             task.WaitAndUnwrapException();
@@ -399,7 +401,7 @@ namespace Transmission.API.RPC
         /// Update blocklist (API: blocklist-update)
         /// </summary>
         /// <returns>Blocklist size</returns>
-        public int BlocklistUpdate()
+        public long? BlocklistUpdate()
         {
             var task = BlocklistUpdateAsync();
             task.WaitAndUnwrapException();

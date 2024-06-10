@@ -13,7 +13,7 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Session limits are honored
         /// </summary>
-        public bool? HonorsSessionLimits { get { return GetValue<bool?>("honorsSessionLimits"); } set { this["honorsSessionLimits"] = value; } }
+        public bool HonorsSessionLimits { get { return GetValue<bool>("honorsSessionLimits"); } set { this["honorsSessionLimits"] = value; } }
 
         /// <summary>
         /// Name of the bandwidth group
@@ -23,21 +23,21 @@ namespace Transmission.API.RPC.Arguments
         /// <summary>
         /// Max global download speed of this bandwidth group (KBps)
         /// </summary>
-        public long? SpeedLimitDown { get { return GetValue<long?>("speed-limit-down"); } set { this["speed-limit-down"] = value; } }
+        public long SpeedLimitDown { get { return GetValue<long>("speed-limit-down"); } set { this["speed-limit-down"] = value; } }
 
         /// <summary>
         /// True means enabled
         /// </summary>
-        public bool? SpeedLimitDownEnabled { get { return GetValue<bool?>("speed-limit-down-enabled"); } set { this["speed-limit-down-enabled"] = value; } }
+        public bool SpeedLimitDownEnabled { get { return GetValue<bool>("speed-limit-down-enabled"); } set { this["speed-limit-down-enabled"] = value; } }
 
         /// <summary>
         /// Max global upload speed of this bandwidth group (KBps)
         /// </summary>
-        public long? SpeedLimitUp { get { return GetValue<long?>("speed-limit-up"); } set { this["speed-limit-up"] = value; } }
+        public long SpeedLimitUp { get { return GetValue<long>("speed-limit-up"); } set { this["speed-limit-up"] = value; } }
 
         /// <summary>
         /// True means enabled
         /// </summary>
-        public bool? SpeedLimitUpEnabled { get { return GetValue<bool?>("speed-limit-up-enabled"); } set { this["speed-limit-up-enabled"] = value; } }
+        public bool SpeedLimitUpEnabled { get { return GetValue<bool>("speed-limit-up-enabled"); } set { this["speed-limit-up-enabled"] = value; } }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿#nullable enable
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +47,13 @@ namespace Transmission.API.RPC.Entity
         /// Cumulative stats
         /// </summary>
         [JsonProperty("cumulative-stats")]
-        public CommonStatistic CumulativeStats { get; set; }
+        public CommonStatistic? CumulativeStats { get; set; }
  
         /// <summary>
         /// Current stats
         /// </summary>
         [JsonProperty("current-stats")]
-        public CommonStatistic CurrentStats { get; set; }
+        public CommonStatistic? CurrentStats { get; set; }
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿#nullable enable
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Transmission.API.RPC.Entity
         /// Path of the queried directory
         /// </summary>
         [JsonProperty("path")]
-        public string Path { get; set; }
+        public string? Path { get; set; }
 
         /// <summary>
         /// The size, in bytes, of the free space in that directory

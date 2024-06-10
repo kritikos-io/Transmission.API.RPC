@@ -41,17 +41,17 @@ namespace Transmission.API.RPC.Entity
         /// <summary>
         /// if true, don't start the torrent
         /// </summary>
-        public bool? Paused { get { return GetValue<bool>("paused"); } set { this["paused"] = value; } }
+        public bool Paused { get { return GetValue<bool>("paused"); } set { this["paused"] = value; } }
 
         /// <summary>
         /// maximum number of peers
         /// </summary>
-        public long? PeerLimit { get { return GetValue<long?>("peer-limit"); } set { this["peer-limit"] = value; } }
+        public long PeerLimit { get { return GetValue<long>("peer-limit"); } set { this["peer-limit"] = value; } }
 
         /// <summary>
         /// Torrent's bandwidth priority
         /// </summary>
-        public long? BandwidthPriority { get { return GetValue<long?>("bandwidthPriority"); } set { this["bandwidthPriority"] = value; } }
+        public long BandwidthPriority { get { return GetValue<long>("bandwidthPriority"); } set { this["bandwidthPriority"] = value; } }
 
         /// <summary>
         /// Indices of file(s) to download

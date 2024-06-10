@@ -405,7 +405,7 @@ namespace Transmission.API.RPC.Entity
         {
             get
             {
-                return new string[] 
+                return new string[]
                 {
                     #region ALL FIELDS
                     ACTIVITY_DATE,

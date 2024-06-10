@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿#nullable enable
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace JDRemote.Backends.Transmission
         /// <returns></returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(long[]) || objectType == typeof(long) || objectType == typeof(int[]) || objectType == typeof(int) || objectType == typeof(long?[]) || objectType == typeof(long?) || objectType == typeof(int?[]) || objectType == typeof(int?);
+            return objectType == typeof(long?[]) || objectType == typeof(long[]) || objectType == typeof(int?[]) || objectType == typeof(int[]) || objectType == typeof(long?) || objectType == typeof(long) || objectType == typeof(int?) || objectType == typeof(int);
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace JDRemote.Backends.Transmission
         /// <param name="serializer"></param>
         /// <returns></returns>
         /// <exception cref="JsonSerializationException"></exception>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             JToken token = JToken.Load(reader);
 
@@ -60,11 +61,11 @@ namespace JDRemote.Backends.Transmission
         /// <param name="writer"></param>
         /// <param name="value"></param>
         /// <param name="serializer"></param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             if (value != null)
             {
-                long?[] longArray = (long?[])value;
+                long[] longArray = (long[])value;
                 if (longArray.Length == 1)
                 {
                     writer.WriteValue(longArray[0]);
