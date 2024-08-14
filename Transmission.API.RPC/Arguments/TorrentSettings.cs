@@ -125,12 +125,12 @@ namespace Transmission.API.RPC.Arguments
 		/// <summary>
 		/// Files wanted
 		/// </summary>
-		public string[] FilesWanted { get { return GetValue<string[]>("files-wanted"); } set { this["files-wanted"] = value; } }
+		public int[] FilesWanted { get { return GetValue<int[]>("files-wanted"); } set { this["files-wanted"] = value; } }
 
 		/// <summary>
 		/// Files unwanted
 		/// </summary>
-		public string[] FilesUnwanted { get { return GetValue<string[]>("files-unwanted"); } set { this["files-unwanted"] = value; } }
+		public int[] FilesUnwanted { get { return GetValue<int[]>("files-unwanted"); } set { this["files-unwanted"] = value; } }
 
 		/// <summary>
 		/// High priority files
